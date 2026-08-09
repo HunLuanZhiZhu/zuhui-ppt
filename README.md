@@ -33,6 +33,23 @@
 | 6 | `zuhui-ppt-visual-audit` | 视觉审查 | 图片完整度、公式渲染、文字大小、布局合理性——以 1920×1080 真实渲染为准 |
 | 7 | `zuhui-ppt-visual-score` | 视觉评分 | 6 维度逐页评分（证据可读性 / 图文协作 / 排版纪律 / 视觉节奏 / 内容密度 / 观众清晰度） |
 
+### 🔀 英文别名（English Aliases）
+
+每个 `zuhui-ppt-*` skill 都有一个对应的 `group-meeting-ppt-*` 英文薄壳。薄壳不复制内容，只做转发：如果对应的 zuhui skill 已安装则直接使用，否则说明如何下载。
+
+| 中文原版（规范源） | 英文别名（薄壳） |
+|-------------------|-----------------|
+| `zuhui-ppt-master` | `group-meeting-ppt-master` |
+| `zuhui-ppt-source-audit` | `group-meeting-ppt-source-audit` |
+| `zuhui-ppt-story-spine` | `group-meeting-ppt-story-spine` |
+| `zuhui-ppt-swiss-design` | `group-meeting-ppt-swiss-design` |
+| `zuhui-ppt-triformat-export` | `group-meeting-ppt-triformat-export` |
+| `zuhui-ppt-qa` | `group-meeting-ppt-qa` |
+| `zuhui-ppt-visual-audit` | `group-meeting-ppt-visual-audit` |
+| `zuhui-ppt-visual-score` | `group-meeting-ppt-visual-score` |
+
+> **维护方式**：所有实际内容只在 `zuhui-ppt-*` 中维护。英文薄壳无需同步修改，仅当仓库 URL 或安装命令变更时才需更新。用户通过 `npx skills find "group meeting ppt"` 可用英文名搜索到本工具链。
+
 ---
 
 ## 🔧 工作流程
@@ -98,6 +115,18 @@ npx skills add hunluanzhizhu/zuhui-ppt -l
 
 ```bash
 npx skills add hunluanzhizhu/zuhui-ppt -y
+```
+
+### 通过英文名安装
+
+也可以用英文别名安装（薄壳会指引你使用对应的 zuhui skill）：
+
+```bash
+# 安装英文别名主控
+npx skills add hunluanzhizhu/zuhui-ppt@group-meeting-ppt-master -g -y
+
+# 用英文名搜索
+npx skills find "group meeting ppt"
 ```
 
 ---
@@ -208,6 +237,22 @@ zuhui-ppt/
 ├── zuhui-ppt-visual-audit/
 │   └── SKILL.md
 ├── zuhui-ppt-visual-score/
+│   └── SKILL.md
+├── group-meeting-ppt-master/      # 英文薄壳 → 指向 zuhui-ppt-master
+│   └── SKILL.md
+├── group-meeting-ppt-source-audit/
+│   └── SKILL.md
+├── group-meeting-ppt-story-spine/
+│   └── SKILL.md
+├── group-meeting-ppt-swiss-design/
+│   └── SKILL.md
+├── group-meeting-ppt-triformat-export/
+│   └── SKILL.md
+├── group-meeting-ppt-qa/
+│   └── SKILL.md
+├── group-meeting-ppt-visual-audit/
+│   └── SKILL.md
+├── group-meeting-ppt-visual-score/
 │   └── SKILL.md
 ├── LICENSE                        # GPL-3.0
 └── README.md
