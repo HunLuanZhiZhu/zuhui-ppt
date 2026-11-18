@@ -3,6 +3,18 @@ name: zuhui-ppt-master
 description: 当用户请求 组会PPT、论文汇报PPT、paper sharing slides、Swiss-style scientific PPT 或 PPT/HTML/PDF 三重交付物时， orchestrate 高端中文 journal-club 与组会论文汇报。该主技能按严格顺序管道协调七个 zuhui-ppt-* 子技能：source-audit → story-spine → swiss-design → triformat-export → qa → visual-audit → visual-score，并 review gate 逐一通过。它继承并本地化 Swiss International 风格资产（template-swiss.html、S01-S22 注册布局、validate-swiss-deck.mjs、themes-swiss.md、layouts-swiss.md、swiss-layout-lock.md、checklist.md、screenshot-backgrounds），内化了证据优先的论文提取方法论（每页 claim+proof+caveat、presentation logic routing、结论式标题、slide archetype recipes、strategist-executor-critic 迭代），并贯彻精益操作原则（最小提取、跨平台工具链、快速路径默认），从而可在无外部技能依赖的情况下运行。
 ---
 
+## Claude Code 整体插件路径与运行约定
+
+当此技能作为整个 `zuhui-ppt` 插件的一部分使用时，**本技能的所有仓库相对路径均相对于插件根目录**，不是用户当前工作目录：
+
+- 资源及模板：`${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/assets/`、`${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/references/`；
+- 关联技能：`${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-<stage>/SKILL.md`，Claude Code 中技能名称带有 `zuhui-ppt:` 命名空间；
+- 校验器：使用 `node "${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/scripts/validate-swiss-deck.mjs" "ppt_vN/deck.html"` 和 `node "${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/scripts/validate-research-ledgers.mjs" ...`（根据实际输出路径替换示意路径）。
+
+`PROJECT_SLUG`、`VERSION`、`OUTPUT_DIR` 和原论文素材属于**用户项目工作区**，不能把输出写进插件安装目录。继续遵守主控对 HTML、图面板、公式账本、质量门和旧版本保留的规则。独立通过 Skills 安装器使用时，依然按原先工作区与同级技能目录的方式定位资源。
+
+
+
 # 组会 PPT 主控技能（Zuhui PPT Master）
 
 ## 目标
