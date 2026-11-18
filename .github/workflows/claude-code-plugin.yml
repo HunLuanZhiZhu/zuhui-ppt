@@ -1,0 +1,22 @@
+name: Claude Code plugin validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check plugin structure and built-in assets
+        run: node --test tests/claude-code-plugin.test.mjs
+      - name: Install official Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+      - name: Validate plugin in strict mode
+        run: claude plugin validate . --strict
+      - name: Validate marketplace in strict mode
+        run: claude plugin validate .claude-plugin/marketplace.json --strict
