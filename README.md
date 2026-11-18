@@ -95,6 +95,25 @@
 
 新增强制研究记录：`figure_manifest_vN.json`（源图/面板清单）、`formula_ledger_vN.json`（逐页公式释义）、`revision_regression_vN.md`（反馈回归记录）。可运行 `node zuhui-ppt-master/scripts/validate-research-ledgers.mjs <figure_manifest.json> <formula_ledger.json>` 进行账本结构核验（不能代替源图人工对照）。已有的七阶段顺序、30 页/30 分钟组会门槛、22 种 Swiss 布局和 HTML 规范源规则维持不变。
 
+## Claude Code 整体插件（一键安装）
+
+现在可将整套主控 + 七个子技能作为**一个 Claude Code 插件**安装，无需逐个添加技能。仓库自带 `.claude-plugin/plugin.json` 与 `.claude-plugin/marketplace.json`：
+
+```bash
+claude plugin marketplace add HunLuanZhiZhu/zuhui-ppt
+claude plugin install zuhui-ppt@zuhui-ppt-marketplace
+```
+
+在 Claude Code 中输入：
+
+```text
+/zuhui-ppt:ppt 将论文 paper.pdf 和中文版 paper_zh.pdf 制作为中文组会演示
+```
+
+可以使用 `claude plugin list` 查看安装情况；用 `claude --plugin-dir .` 在克隆目录里临时加载进行测试。保留原有 `npx skills add` 独立安装方式。完整目录、运行方式和验证命令参见 **[Claude Code 整体插件说明](./docs/claude-code-plugin.md)**。
+
+---
+
 ## 🚀 安装
 
 ### 安装全部 skills（推荐）
