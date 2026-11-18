@@ -103,6 +103,17 @@ description: 校验高端中文组会论文汇报 PPT 包，尤其是 zuhui-ppt-
 
 若用户仅请求单一 HTML，可在报告中把未请求的 PDF/PPTX 导出标为 `NOT REQUESTED`，不可声称存在；若按本组会主控默认三格式交付，则仍执行三格式数量门。
 
+### 账本结构自动校验（不代替人工对照）
+
+生成 `figure_manifest_v{VERSION}.json` 与 `formula_ledger_v{VERSION}.json` 后，先运行：
+
+```bash
+node zuhui-ppt-master/scripts/validate-research-ledgers.mjs \
+  ppt_vN/figure_manifest_vN.json ppt_vN/formula_ledger_vN.json
+```
+
+脚本能拒绝：完整图漏登记子面板、局部图未声明省略范围、图例/轴未确认、缺少原始对照确认、丢失图资产、公式符号或解释缺项；脚本**不能判断 PNG 像素实际是否裁掉了半个面板**，必须继续按下一步做原 PDF→资产→幻灯片的人工三联对照。
+
 ## 渲染 QA
 
 **标准视觉审查管道**（默认）：
