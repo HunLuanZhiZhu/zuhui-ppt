@@ -93,7 +93,7 @@
 - **多论文**：独立内容分段、清晰的过渡与跨论文方法对读；不混淆不同版本和基准条件。
 - **QA 不能虚报**：静态布局检查、浏览器画面检查、图源逐面板对照和公式语义检查独立记录。源图或符号释义失败会否决交付，即使视觉得分很高也不能放行。
 
-新增推荐产物：`figure_manifest_vN.json`（源图/面板清单）、`formula_ledger_vN.json`（逐页公式释义）、`revision_regression_vN.md`（反馈回归记录）。已有的七阶段顺序、30 页/30 分钟组会门槛、22 种 Swiss 布局和 HTML 规范源规则维持不变。
+新增强制研究记录：`figure_manifest_vN.json`（源图/面板清单）、`formula_ledger_vN.json`（逐页公式释义）、`revision_regression_vN.md`（反馈回归记录）。可运行 `node zuhui-ppt-master/scripts/validate-research-ledgers.mjs <figure_manifest.json> <formula_ledger.json>` 进行账本结构核验（不能代替源图人工对照）。已有的七阶段顺序、30 页/30 分钟组会门槛、22 种 Swiss 布局和 HTML 规范源规则维持不变。
 
 ## 🚀 安装
 
