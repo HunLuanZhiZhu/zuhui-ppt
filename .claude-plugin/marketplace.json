@@ -9,8 +9,7 @@
     {
       "name": "zuhui-ppt",
       "source": "./",
-      "description": "理论与证据并重的中文论文组会 PPT；含 8 个核心技能及 HTML/PDF/PPTX 的完整制作管道。",
-      "version": "1.1.0"
+      "description": "理论与证据并重的中文论文组会 PPT；含 8 个核心技能及 HTML/PDF/PPTX 的完整制作管道。"
     }
   ]
 }
