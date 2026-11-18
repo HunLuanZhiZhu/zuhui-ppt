@@ -1,0 +1,17 @@
+name: Skill content evidence QA
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  research-ledgers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate script syntax
+        run: node --check zuhui-ppt-master/scripts/validate-research-ledgers.mjs
+      - name: Test figure and formula gates
+        run: node --test tests/research-ledgers.test.mjs
