@@ -22,7 +22,7 @@ jobs:
         run: claude plugin validate .claude-plugin/marketplace.json --strict
       - name: Smoke install the whole plugin from local marketplace
         run: |
-          claude plugin marketplace add .
+          claude plugin marketplace add ./
           claude plugin install zuhui-ppt@zuhui-ppt-marketplace
           claude plugin list
           claude plugin details zuhui-ppt
