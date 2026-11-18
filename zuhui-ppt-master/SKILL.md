@@ -489,6 +489,8 @@ QA gates：
 - validate-swiss-deck 报错，
 - 旧版本用户反馈未解决。
 
+在结构 QA 阶段首先运行 `node zuhui-ppt-master/scripts/validate-research-ledgers.mjs ppt_vN/figure_manifest_vN.json ppt_vN/formula_ledger_vN.json`；结果只核对账本字段，不代替下一阶段的人眼源图检查。
+
 ### 第六阶段 — 强制视觉审查
 
 使用 `zuhui-ppt-visual-audit`，在第七阶段评分之前进行真实的浏览器逐页审查：
