@@ -81,6 +81,16 @@ PPTX 与 PDF 必须派生自 HTML。不要构建单独的 PPTX 布局引擎。�
 
 即使在此例外情况下，可编辑 PPTX 仍应尽可能在视觉上匹配 HTML。
 
+## 研究资产与跨版本一致性（新增强制项）
+
+构建时读取 `figure_manifest_vN.json` 和 `formula_ledger_vN.json`，并保留路径与页面关联。每张含图页记录源论文、版本、逻辑图号、面板范围；特别禁止为了适配容器把一个包含 (a+b) 的整图硬切成“不完整前一页 + 不完整后一页”。
+
+- **先定资产再导出**：源 PDF 到 PNG/SVG 的图例、轴、面板必须先检查，不能拿 HTML 不越界掩盖错误裁图。
+- **公式不仅能渲染，还必须能理解**：KaTeX 或 MathJax 成功只代表排版层通过，导出时不能移除公式的同屏符号表、输入/输出解释和核心作用。
+- **同一 HTML 画面**生成 PDF/PPTX，但保持引用图片分辨率/文字可读性；如使用一体化离线 HTML，确保图片和公式所需资源真正内嵌或有本地后备。
+- **版本号**：每次用户反馈建立新 `ppt_vN`，保留旧版，`revision_regression_vN.md` 逐条列出“用户指出的问题 → 根因 → 修改页 → 源素材与截图验证”。原论文/译文版本差异在注释或源文件审计披露。
+- **不以格式一致性代替内容正确性**：HTML、PDF 和 PPTX 可以“三者一致地显示错误的半张图”，因此格式数量一致不代表图语义完整。
+
 ## 输出包
 
 使用 `OUTPUT_DIR` 与项目参数化的文件名：
@@ -91,6 +101,10 @@ PPTX 与 PDF 必须派生自 HTML。不要构建单独的 PPTX 布局引擎。�
 - `{OUTPUT_DIR}/speaker_notes_v{VERSION}.md`（每页要点）
 - `{OUTPUT_DIR}/speaker_script_v{VERSION}.md`（逐字完整讲稿，含每页字数与总预估时长）
 - `{OUTPUT_DIR}/qa_report_v{VERSION}.md`
+- `{OUTPUT_DIR}/figure_manifest_v{VERSION}.json`
+- `{OUTPUT_DIR}/formula_ledger_v{VERSION}.json`
+- `{OUTPUT_DIR}/revision_regression_v{VERSION}.md`
+- `{OUTPUT_DIR}/visual_audit_report_v{VERSION}.md`
 - `{OUTPUT_DIR}/assets/`
 - `{OUTPUT_DIR}/contact_sheet_v{VERSION}.png`（或等效渲染预览，若可用）
 - `{OUTPUT_DIR}/build_v{VERSION}.sh`（可复现构建脚本或命令）
