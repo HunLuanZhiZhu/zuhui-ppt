@@ -1,0 +1,31 @@
+{
+  "name": "zuhui-ppt",
+  "displayName": "Zuhui PPT｜中文学术组会演示",
+  "version": "1.1.0",
+  "description": "将学术论文及中译 PDF 转换为证据完整、理论优先的中文 Swiss International 组会演示。安装一次即可使用主控与七阶段技能，交付 HTML/PDF/PPTX、逐页讲稿和质量报告。",
+  "author": {
+    "name": "HunLuanZhiZhu",
+    "url": "https://github.com/HunLuanZhiZhu"
+  },
+  "homepage": "https://github.com/HunLuanZhiZhu/zuhui-ppt",
+  "repository": "https://github.com/HunLuanZhiZhu/zuhui-ppt",
+  "license": "GPL-3.0-only",
+  "keywords": [
+    "academic-presentation",
+    "group-meeting",
+    "journal-club",
+    "swiss-style",
+    "paper-to-slides",
+    "tabular-foundation-model"
+  ],
+  "skills": [
+    "./zuhui-ppt-master",
+    "./zuhui-ppt-source-audit",
+    "./zuhui-ppt-story-spine",
+    "./zuhui-ppt-swiss-design",
+    "./zuhui-ppt-triformat-export",
+    "./zuhui-ppt-qa",
+    "./zuhui-ppt-visual-audit",
+    "./zuhui-ppt-visual-score"
+  ]
+}

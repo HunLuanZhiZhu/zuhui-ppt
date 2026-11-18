@@ -1,0 +1,15 @@
+{
+  "name": "zuhui-ppt-marketplace",
+  "description": "Zuhui PPT 官方 Claude Code 插件发布目录：完整的中文学术组会演示工作流。",
+  "owner": {
+    "name": "HunLuanZhiZhu",
+    "url": "https://github.com/HunLuanZhiZhu"
+  },
+  "plugins": [
+    {
+      "name": "zuhui-ppt",
+      "source": "./",
+      "description": "理论与证据并重的中文论文组会 PPT；含 8 个核心技能及 HTML/PDF/PPTX 的完整制作管道。"
+    }
+  ]
+}

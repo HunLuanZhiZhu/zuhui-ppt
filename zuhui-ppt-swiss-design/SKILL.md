@@ -3,6 +3,18 @@ name: zuhui-ppt-swiss-design
 description: 将 Swiss International 风格视觉设计应用于高密度中文论文汇报 PPT。在 zuhui-ppt-master 工作流中，故事脊椎就绪后使用。继承并本地化 guizang-ppt-skill 的资产（template-swiss.html、themes-swiss.md、layouts-swiss.md、swiss-layout-lock.md、checklist.md、components.md、screenshot-framing.md、screenshot-backgrounds、validate-swiss-deck.mjs），从而无需在运行时依赖 guizang-ppt-skill。强制使用 IKB 蓝、暗色章节页、注册 S01-S22 布局、大论文图、高密度内容与反稀疏规则。
 ---
 
+## Claude Code 整体插件路径与运行约定
+
+当此技能作为整个 `zuhui-ppt` 插件的一部分使用时，**本技能的所有仓库相对路径均相对于插件根目录**，不是用户当前工作目录：
+
+- 资源及模板：`${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/assets/`、`${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/references/`；
+- 关联技能：`${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-<stage>/SKILL.md`，Claude Code 中技能名称带有 `zuhui-ppt:` 命名空间；
+- 校验器：使用 `node "${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/scripts/validate-swiss-deck.mjs" "ppt_vN/deck.html"` 和 `node "${CLAUDE_PLUGIN_ROOT}/zuhui-ppt-master/scripts/validate-research-ledgers.mjs" ...`（根据实际输出路径替换示意路径）。
+
+`PROJECT_SLUG`、`VERSION`、`OUTPUT_DIR` 和原论文素材属于**用户项目工作区**，不能把输出写进插件安装目录。继续遵守主控对 HTML、图面板、公式账本、质量门和旧版本保留的规则。独立通过 Skills 安装器使用时，依然按原先工作区与同级技能目录的方式定位资源。
+
+
+
 # 组会 PPT Swiss 设计（Zuhui PPT Swiss Design）
 
 ## 目标
