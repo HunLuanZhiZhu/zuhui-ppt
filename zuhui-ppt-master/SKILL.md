@@ -89,19 +89,30 @@ description: 当用户请求 组会PPT、论文汇报PPT、paper sharing slides�
 - [ ] 论文作者信息确实来自论文原文，而非演讲者个人资料。
 - [ ] 演讲者信息字号与位置不抢论文标题与作者的风头。
 
+## 用户反馈转化为不可跳过的研究型质量约束
+
+本次强制遵循 `references/research-deck-quality-protocol.md`。它细化了七阶段既有职责，不新增布局，也不改变 HTML 优先原则：
+
+- **理论主线**：算法/方法论文以理论、架构和机制为骨架，默认理论/机制 50%–60%、实验 20%–35%，作为每篇论文的可调整规划预算。不得将所有次要图一图一页；合并、舍弃或移至备份必须有取舍理由。
+- **整图语义边界**：以原论文的完整逻辑图号和所有 (a)/(b)/内部面板为单位核验。即使 `object-fit:contain`、页面没有越界，也不能推断“裁剪图完整”。在 `figure_manifest_vN.json` 留下原页码、面板清单与人工对照记录。
+- **公式可读性**：每个展示公式建立 `formula_ledger_vN.json`，可见页面必须解释关键符号、索引/维度、输入输出与设计作用；重要公式用最小例子或形状追踪。只有讲稿里有解释不算通过。
+- **多论文/翻译版本**：分别审计各篇的原版和译版、版本号、引用图的版本；有明确的两篇边界与对读，不跨不同实验口径直接比较优劣。
+- **回归修复**：用户提出的“37 页图 3(a+b) 丢子图”“37/38 页逻辑断裂”“公式符号不明”“实验堆叠”应写入修订回归清单。真正修好后需附源图对照和相邻页截图，不能凭自动检测通过宣称修复。
+- **不虚报校验**：结构 QA、浏览器像素渲染、源图逐面板对照与公式符号审查是四类不同的检查。未运行须写 `NOT RUN`，不得与 `PASS` 混同。视觉评分即使 ≥4.5/5 也不抵消源图或公式解释的关键失败。
+
 ## 必需子技能链（严格顺序管道）
 
 必须按以下精确顺序调用同级子技能。每一阶段的结果喂给下一阶段；不要并行化，不要跳过，只有在当前阶段的 review gate 满足后才能进入下一阶段。进入下一阶段前，先记录当前阶段的输出产物。
 
 | 阶段 | 子技能 | 输出产物 | Review gate（进入下一阶段前必须通过） |
 |-------|----------|----------------|-------------------------------------------|
-| 1 | `zuhui-ppt-source-audit` | `audit_note_v{VERSION}.md` + asset manifest | 源文件清单完整；候选图/表已识别；旧版本失败点已记录。 |
-| 2 | `zuhui-ppt-story-spine` | `slide_plan_v{VERSION}.md` | 每个非过渡页都有 claim + proof object + interpretation + caveat；页数与密度合适。 |
+| 1 | `zuhui-ppt-source-audit` | `audit_note_v{VERSION}.md` + asset manifest | 源文件及版本锁定；候选图/表与全部子图面板已识别；译图与原图差异、旧版本失败点已记录。 |
+| 2 | `zuhui-ppt-story-spine` | `slide_plan_v{VERSION}.md` | 每个非过渡页都有 claim + proof object + interpretation + caveat；逐论文理论/实验预算与公式释义计划已审查。 |
 | 3 | `zuhui-ppt-swiss-design` | `visual_plan_v{VERSION}.md` | 布局 ID 已注册（S01-S22 或 ASCII 扩展）；主题已选；图片尺寸与节奏已规划。 |
 | 4 | `zuhui-ppt-triformat-export` | `.html`（规范源）、`.pdf`、`.pptx`、构建脚本/笔记 | 数量一致；HTML 使用 `template-swiss.html`；PPTX 默认采用截图 backed。 |
 | 5 | `zuhui-ppt-qa` | `qa_report_v{VERSION}.md` | 结构门通过：数量一致、布局已注册、资源存在、无禁用短语、密度最低标准满足。 |
-| 6 | `zuhui-ppt-visual-audit` | `visual_audit_report_v{VERSION}.md` | **硬性指标通过**：页数 ≥ 30 页、讲稿时长 ≥ 30 分钟；图片无裁切、公式全部渲染、文字大小与布局无硬伤。 |
-| 7 | `zuhui-ppt-visual-score` | `visual_score_v{VERSION}.md` | 总分 ≥ 4.5/5。若低于 4.5，交付前迭代并重新评分。 |
+| 6 | `zuhui-ppt-visual-audit` | `visual_audit_report_v{VERSION}.md` | **硬性指标通过**：页数 ≥ 30 页、讲稿时长 ≥ 30 分钟；图片源码面板完整且演示中不裁切、公式已渲染且可解释、相邻页逻辑自然、文字大小与布局无硬伤。 |
+| 7 | `zuhui-ppt-visual-score` | `visual_score_v{VERSION}.md` | 总分 ≥ 4.5/5 且无源图/公式语义一票否决项；未独立评分不得宣称通过。 |
 
 ### 管道纪律
 
@@ -413,10 +424,10 @@ OCR、完整补充材料提取、全页高分辨率渲染、全页渲染 QA 和�
 
 **严格 review gate**：第二阶段完成后，必须审查并确认 `slide_plan_v{VERSION}.md`。验证以下全部内容；任何一条失败即拒绝该计划：
 
-- 页数符合用户要求长度或合理默认值（15 分钟 ≈ 10 页，30 分钟 ≈ 20 页，45 分钟 ≈ 25-30 页）。
+- 若为组会/文献汇报，内容页必须不少于 30 页、讲稿不少于 30 分钟；其他类型演示仅遵循用户的明确长度要求。
 - 每个非过渡页都有清晰的 **claim**、具体的 **proof object**、**interpretation** 和 **caveat/boundary**。
 - 每个非过渡页至少有 **3-5 个具体信息点**（数据点、对比、指标或具体论点）。
-- 图分配通过信息密度评估；低信息图应合并，而不是独占整页。
+- 图分配通过信息密度与语义完整性评估：源图面板清单正确；次要图应合并、舍弃或放到备份，不为凑页数独占整页。
 - 不存在仅用于展示图注或论文 legend 作为可见 slide copy 的页面。
 - 叙事弧线遵循某一种演示逻辑路由，并从标题到结尾连贯。
 - 过渡页必须有正当理由；通用章节标题如“Method”或“Results”禁止作为幻灯片标题。
@@ -435,6 +446,8 @@ OCR、完整补充材料提取、全页高分辨率渲染、全页渲染 QA 和�
 - 预判 `validate-swiss-deck.mjs` 检查：每页都带 `data-layout`、SVG 几何中无可见 `<text>`、布局已注册。
 
 论文图优先使用 S22、S21、S19、S09。避免未注册正文布局。
+
+**阶段 1–3 新增持久产物**：`figure_manifest_v{VERSION}.json`、`formula_ledger_v{VERSION}.json`、`revision_regression_v{VERSION}.md`。前两者的示例和填写规则见研究质量协议。审计未通过不能靠导出或评分补救。
 
 ### 第四阶段 — 三重导出
 
@@ -476,7 +489,16 @@ QA gates：
 - validate-swiss-deck 报错，
 - 旧版本用户反馈未解决。
 
-### 第六阶段 — 视觉质量评分
+### 第六阶段 — 强制视觉审查
+
+使用 `zuhui-ppt-visual-audit`，在第七阶段评分之前进行真实的浏览器逐页审查：
+
+- 将论文原始图、裁切资产和 1920×1080 幻灯片截图按面板清单逐个比较，检查有无“37 页图缺少 (b)，38 页误接残片”等现象。
+- 每个公式页核对 `formula_ledger` 与屏幕上的解释：符号、下标、取值范围/维度、运算语义和最小示例。
+- 至少逐页检查所有图页及其前后相邻页，确认不存在不自然的图形分割和重复证据。
+- 记录 `PASS / FAIL / NOT RUN`。有关键 `FAIL` 时回溯修复并重做所有后续检查。
+
+### 第七阶段 — 视觉质量评分
 
 使用 `zuhui-ppt-visual-score`。
 
@@ -504,6 +526,10 @@ QA gates：
 - `{OUTPUT_DIR}/{PROJECT_SLUG}_v{VERSION}.html`
 - `{OUTPUT_DIR}/{PROJECT_SLUG}_v{VERSION}.pdf`
 - `{OUTPUT_DIR}/speaker_notes_v{VERSION}.md`
+- `{OUTPUT_DIR}/figure_manifest_v{VERSION}.json`
+- `{OUTPUT_DIR}/formula_ledger_v{VERSION}.json`
+- `{OUTPUT_DIR}/revision_regression_v{VERSION}.md`
+- `{OUTPUT_DIR}/visual_audit_report_v{VERSION}.md`
 - `{OUTPUT_DIR}/qa_report_v{VERSION}.md`
 - `{OUTPUT_DIR}/assets/`
 
@@ -517,4 +543,4 @@ QA gates：
 - 与被批评版本相比改了什么，
 - 使用了哪些子技能，
 - QA 结果，
-- 任何渲染限制。
+- 任何未执行的图面板核验、公式解释审查或渲染限制，不得以静态检查冒充已完成。
