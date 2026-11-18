@@ -27,7 +27,7 @@ test("plugin manifest defines a single namespace with eight original skills", ()
   for (const dir of skillDirs) {
     const p = path.join(dir, "SKILL.md");
     assert.ok(fs.existsSync(path.join(root, p)), p + " missing");
-    assert.match(read(p), new RegExp("^---[\\s\\S]*?\\nname: " + dir + "\\n"));
+    assert.match(read(p), new RegExp("^---[\\s\\S]*?\\nname:\\s*[\\\"\x27]?" + dir + "[\\\"\x27]?\\s*\\n"));
     assert.match(read(p), /CLAUDE_PLUGIN_ROOT/);
   }
   assert.ok(!manifest.skills.some(dir => dir.includes("group-meeting-ppt-")));
